@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Criativa</title>
+  <style>
+    body{
+      background: #e5e5e5;
+      color: #24282b;
+      text-align: center;
+    }
+
+    button{
+      color: #ff5e84;
+      border: none;
+      font-weight: bold;
+      background: none;
+    }
+
+
+    .fat{
+      color: white;
+      background: #ff5e84;
+    }
+
+    #footer a{
+      color: #25282b;
+      text-decoration: none;
+    }
+
+    .hide{
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      width: 0;
+      height: 0;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>Casa Criativa</h1>
+  <img src="./logo.png" alt="Imgaem da Logomarca">
+
+  <p>
+    Ficar em casa em períodos longos, não deve ser nada fácil.
+  </p>
+  <p>
+    Por isso, iremos catalogar ideias,<strong> brincadeiras, jogos, filmes,
+    livros, cursos, dicas</strong> e tudo que for necessário para tormar
+    esse momento mais interessante.
+  </p>
+  <p>
+    Começe clicando em ver ideias para ver as ideias cadatradas
+    e contribua adicionando a sua ideia
+  </p>
+
+  <button>+ Adicionar Ideia</button>
+  <button class="fat">Ver Ideias</button>
+
+
+  <p id="footer">Desenvolvido com ❤ por <a href="https://github.com/alvarobasia">Álvaro Basílio</a></p>
+
+  <script>
+
+    function handleFatButton(event) {
+      document.querySelector('#footer')
+     .classList.toggle('hide');
+    }
+
+    document.querySelector('button.fat')
+    .addEventListener("click", handleFatButton ,false);
+  </script>
+
+</body>
+</html>
