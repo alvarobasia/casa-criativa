@@ -1,0 +1,223 @@
+body {
+	background: #e5e5e5;
+	color: #24282b;
+	margin: 0;
+	font-family: "Montserrat", sans-serif;
+}
+
+a {
+	color: #ff5e84;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+p,
+.description {
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: 0.1px;
+}
+
+#container {
+	width: 90%;
+	max-width: 980px;
+	margin: 40px auto;
+	display: flex;
+}
+
+#intro {
+	width: 300px;
+	margin-right: 20px;
+}
+
+main {
+	margin: 32px 0;
+}
+
+#buttons {
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 32px;
+}
+
+button {
+	color: #ff5e84;
+	background: none;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+	outline: none;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 18px;
+	letter-spacing: 0.2px;
+}
+
+button:hover:not(.fat) {
+	text-decoration: underline;
+}
+
+button.fat {
+	color: white;
+	background: #ff5e84;
+	width: 150px;
+	height: 40px;
+	border-radius: 6px;
+	box-shadow: 0 8px 16px #ff5e8432;
+}
+
+footer {
+	text-align: center;
+	position: relative;
+	font-size: 14px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	letter-spacing: 0.2px;
+	color: #777;
+}
+
+footer a {
+	opacity: 0.7;
+}
+
+footer span {
+	color: red;
+	font-size: 30px;
+	display: inline-block;
+	position: relative;
+	top: 7px;
+}
+
+.idea {
+	display: flex;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px -8px #0101011a;
+	padding: 32px;
+	margin: 0 0 32px;
+}
+
+.idea img {
+	width: 60px;
+	height: 60px;
+	margin-right: 32px;
+}
+
+.idea h3 {
+	margin: 0;
+}
+
+.idea p {
+	margin: 8px 0;
+	color: #777;
+}
+
+.idea .description {
+	margin: 16px 0;
+}
+
+#modal {
+	background: #ff5e84;
+	opacity: inherit;
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	transition: opacity 400ms ease-in-out;
+}
+
+#modal .content {
+	margin-top: 128px;
+	color: white;
+}
+
+#modal .content h1 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#modal form {
+	max-width: 800px;
+	width: 80%;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+}
+
+.content form div:nth-child(n + 3) {
+	grid-column: 1 / 3;
+}
+
+form input,
+form textarea {
+	width: 100%;
+	padding: 12px;
+	border-radius: 6px;
+	border: 1px solid #8d193480;
+	outline: none;
+	box-sizing: border-box;
+}
+
+form label {
+	font-weight: 600;
+	line-height: 32px;
+	letter-spacing: 0.8px;
+}
+
+form a {
+	width: 150px;
+	height: 40px;
+	background-color: #fff2;
+	color: white;
+	display: flex;
+	border-radius: 6px;
+	font-weight: bold;
+	font-style: 14px;
+	align-items: center;
+	justify-content: center;
+	align-self: end;
+	transition: all 400ms ease-in-out;
+}
+
+form a:hover {
+	background-color: #fff;
+	color: #ff5e84;
+	text-decoration: none;
+}
+
+form button {
+	background: white;
+	height: 40px;
+	width: 150px;
+	border-radius: 6px;
+	cursor: pointer;
+	text-decoration: none !important;
+	margin-top: 32px;
+	grid-column: 2/3;
+	justify-self: end;
+	transition: all 400ms ease-in-out;
+}
+
+form button:hover {
+	background-color: #0984e3;
+	color: white;
+}
+
+#modal.hide {
+	overflow: hidden;
+	visibility: hidden;
+	margin: 0;
+	padding: 0;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	transition: all 400ms ease-out;
+}
