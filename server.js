@@ -2,74 +2,8 @@ const express = require("express");
 
 const server = express();
 
-const ideas = [
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729007.svg",
-		title: "Cursos de Programação",
-		category: "Estudo",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	},
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729005.svg",
-		title: "Exercícios",
-		category: "Saúde",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	},
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729027.svg",
-		title: "Meditação",
-		category: "Mentalidade",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	},
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729032.svg",
-		title: "Karaokê",
-		category: "Diversão em família",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	},
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729038.svg",
-		title: "Pintura",
-		category: "Criatividade",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	},
-	{
-		img: "https://image.flaticon.com/icons/svg/2729/2729048.svg",
-		title: "Recortes",
-		category: "Criatividade",
-		description: `Lorem ipsum dolor sit amet consectetur adipisicing
-		elit. Quas nemo, praesentium sapiente reiciendis
-		nesciunt sunt, odio maxime itaque, pariatur
-		exercitationem asperiores deleniti molestias dolorum
-		voluptas quaerat possimus a saepe explicabo!`,
-		url: "http://rocketseat.com"
-	}
-];
+const db = require("./db");
+
 server.use(express.static("public"));
 
 const nunjucks = require("nunjucks");
@@ -78,20 +12,65 @@ nunjucks.configure("views", {
 	noCache: true
 });
 
+server.use(express.urlencoded({ extended: true }));
+
 server.get("/", function name(req, res) {
-	let lastIdeias = [];
+	db.all(`SELECT * FROM ideas`, (err, rows) => {
+		if (err) {
+			console.log(err);
+			return res.send("Erro no banco de dados.");
+		}
 
-	for (let i in ideas) {
-		lastIdeias.push(ideas[ideas.length - ++i]);
-		if (lastIdeias.length >= 2) break;
-	}
+		let lastIdeias = [];
 
-	return res.render("index.html", { ideas: lastIdeias });
+		for (let i in rows) {
+			lastIdeias.push(rows[rows.length - ++i]);
+			if (lastIdeias.length >= 2) break;
+		}
+
+		return res.render("index.html", { ideas: lastIdeias });
+	});
 });
 
 server.get("/ideias", function name(req, res) {
-	let lastIdeias = [...ideas].reverse();
-	return res.render("ideias.html", { ideas: lastIdeias });
+	db.all(`SELECT * FROM ideas`, (err, rows) => {
+		if (err) {
+			console.log(err);
+			return res.send("Erro no banco de dados.");
+		}
+		let lastIdeias = [...rows].reverse();
+		return res.render("ideias.html", { ideas: lastIdeias });
+	});
+});
+
+server.post("/", (req, res) => {
+	db.run(
+		`
+	    INSERT INTO ideas(
+	      image,
+	      title,
+	      category,
+	      description,
+	      link
+	    ) VALUES (?,?,?,?,?);
+	`,
+		[
+			req.body.image,
+			req.body.title,
+			req.body.category,
+			req.body.description,
+			req.body.link
+		],
+		err => {
+			if (err) {
+				console.log(err);
+				return res.send("Erro no banco de dados.");
+			}
+			return res.redirect("/ideias");
+		}
+	);
+
+	return;
 });
 
 server.listen(3000);
